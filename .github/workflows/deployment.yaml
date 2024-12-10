@@ -1,7 +1,7 @@
 name: Deploy test
 on: [push, workflow_dispatch]
 jobs:
-  Deploy:
+  Lint:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -10,9 +10,26 @@ jobs:
         run: npm ci
       - name: Run lint
         run: npm run lint
+
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
       - name: Run test
         run: npm run test
+
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
       - name: Run build
         run: npm run build
       - name: Deploy
         run: echo "deploying"
+
